@@ -1,0 +1,5 @@
+Once upon a time there was a small model.
+The model read tiny stories and learned simple patterns.
+It made several passes over the same sequence.
+The memory tape carried information from one pass to the next.
+This file is intentionally tiny because it is only for smoke tests.

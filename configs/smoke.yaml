@@ -1,0 +1,32 @@
+seed: 0
+
+model:
+  variant: memory_tape
+  vocab_size: 256
+  block_size: 64
+  n_layer: 2
+  n_head: 2
+  n_embd: 64
+  n_pass: 4
+  dropout: 0.0
+  memory_gate_init: 0.2
+
+objective:
+  pass_weights: [0.0, 0.0, 0.5, 0.5]
+
+training:
+  train_steps: 20
+  batch_size: 8
+  learning_rate: 0.0005
+  weight_decay: 0.1
+  eval_interval: 10
+  eval_batches: 4
+  log_interval: 5
+  device: cpu
+  compile: false
+  output_dir: runs/smoke
+
+data:
+  train_file: tests/fixtures/tiny.txt
+  val_file: tests/fixtures/tiny.txt
+  pad_token_id: null
