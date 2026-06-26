@@ -11,8 +11,6 @@ This repo is intentionally small. It contains only:
    - `CausalTransformer`
    - `MemoryTapeTransformer`
 
-It intentionally does **not** include experiment matrices, plotting, probes, generation, transition losses, NextLat/NMP objectives, VQ, chunked memory, or benchmarking-specific logic.
-
 The goal is to be a nanoGPT-like template for multi-pass / memory-tape experiments: easy to read, copy, fork, and mutate.
 
 ## Install
@@ -93,16 +91,3 @@ objective:
 objective:
   pass_weights: [0, 0, 0, 1]      # final-pass only
 ```
-
-## What to fork for
-
-Fork this repo when you want to test objectives or architectures such as:
-
-- next memory prediction
-- hidden-state transition prediction
-- chunked memory
-- recurrent memory heads
-- quantized future-memory prediction
-- synthetic long-range tasks
-
-Those should be added in the fork, not in this core repo.
