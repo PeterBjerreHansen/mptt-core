@@ -18,6 +18,7 @@ class ModelConfig:
     n_embd: int = 256
     n_pass: int = 1
     dropout: float = 0.0
+    use_flash_attention: bool = True
     memory_gate_init: float = 0.2
 
     def validate(self) -> None:

@@ -13,6 +13,7 @@ def test_causal_transformer_shapes():
         n_head=2,
         n_embd=16,
         n_pass=1,
+        use_flash_attention=False,
     )
     model = CausalTransformer(config)
     tokens = torch.randint(0, config.vocab_size, (2, config.block_size))
@@ -34,6 +35,7 @@ def test_memory_tape_shapes():
         n_head=2,
         n_embd=16,
         n_pass=4,
+        use_flash_attention=False,
     )
     model = MemoryTapeTransformer(config)
     tokens = torch.randint(0, config.vocab_size, (2, config.block_size))

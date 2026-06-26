@@ -3,24 +3,25 @@ seed: 0
 model:
   variant: memory_tape
   vocab_size: 256
-  block_size: 64
-  n_layer: 2
-  n_head: 2
-  n_embd: 64
-  n_pass: 4
+  block_size: 16
+  n_layer: 1
+  n_head: 1
+  n_embd: 16
+  n_pass: 2
   dropout: 0.0
+  use_flash_attention: false
   memory_gate_init: 0.2
 
 objective:
-  pass_weights: [0.0, 0.0, 0.5, 0.5]
+  pass_weights: [0.0, 1.0]
 
 training:
-  train_steps: 20
-  batch_size: 8
+  train_steps: 4
+  batch_size: 2
   learning_rate: 0.0005
   weight_decay: 0.1
   eval_interval: 10
-  eval_batches: 4
+  eval_batches: 1
   log_interval: 5
   device: cpu
   compile: false

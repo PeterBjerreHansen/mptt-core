@@ -7,7 +7,8 @@ This repo is intentionally small. It contains only:
 1. A shared multi-pass `ModelOutput` protocol.
 2. Pass-weighted next-token prediction.
 3. A simple train/eval/checkpoint loop.
-4. Two reference model implementations:
+4. Minimal autoregressive generation methods.
+5. Two reference model implementations:
    - `CausalTransformer`
    - `MemoryTapeTransformer`
 
@@ -36,6 +37,41 @@ bash scripts/train_smoke.sh
 ```bash
 pytest -q
 ```
+
+
+## Generation
+
+Both reference model classes implement nanoGPT-style autoregressive generation.
+
+```python
+out = model.generate(idx, max_new_tokens=100, temperature=0.8, top_k=50)
+```
+
+`CausalTransformer.generate(...)` recomputes the cropped context at every step.
+
+`MemoryTapeTransformer.generate(...)` supports two modes:
+
+```python
+model.generate(idx, max_new_tokens=100, mode="recompute")
+```
+
+`recompute` reruns the full multi-pass forward path at every generated token. It is slow but exactly matches the training-time forward computation.
+
+```python
+model.generate(idx, max_new_tokens=100, mode="last_pass_recurrent")
+```
+
+`last_pass_recurrent` runs full MPTT on the prompt once, then repeatedly runs only the final-pass recurrence using the previous final-pass memory tape. This is cheaper and tests the recurrent use pattern of the memory tape.
+
+## Attention
+
+`CausalSelfAttention` can use PyTorch scaled-dot-product attention when `model.use_flash_attention: true`:
+
+```python
+torch.nn.functional.scaled_dot_product_attention(..., is_causal=True)
+```
+
+This dispatches to Flash Attention CUDA kernels on supported hardware. A manual causal-attention fallback is kept for older PyTorch versions or CPU smoke runs where `use_flash_attention` is disabled.
 
 ## Core idea
 
